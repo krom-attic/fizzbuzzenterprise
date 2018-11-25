@@ -1,0 +1,26 @@
+sudo: required
+
+services:
+- docker
+
+language: java
+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+
+before_deploy:
+  - export JAR_FILE=`find ./build -name "*.jar"`
+  - docker build -t kromkrom/fizzbuzzenterprise --build-arg JAR_FILE=$JAR_FILE .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+deploy:
+  provider: script
+  script: docker push kromkrom/fizzbuzzenterprise
+  on:
+    branch: master

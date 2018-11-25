@@ -1,6 +1,6 @@
-# try JRE
+# TODO try JRE
 FROM openjdk:8-jdk-alpine
-# maybe not needed
+# TODO maybe not needed
 VOLUME /tmp
 ARG JAR_FILE
 COPY ${JAR_FILE} app.jar
