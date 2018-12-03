@@ -1,16 +1,17 @@
 package ru.grushetsky.fizzbuzzenterprise.api
 
-import org.springframework.http.MediaType
-import org.springframework.stereotype.Controller
-import org.springframework.web.reactive.function.BodyInserters
-import org.springframework.web.reactive.function.server.ServerRequest
-import org.springframework.web.reactive.function.server.ServerResponse
-import reactor.core.publisher.Mono
+import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
+import ru.grushetsky.fizzbuzzenterprise.domain.FizzBuzzService
 
-@Controller
-class FizzBuzzController {
+@CrossOrigin
+@RestController("/numbers")
+class FizzBuzzController(val fizzBuzzService: FizzBuzzService) {
 
-    fun showWelcome(request: ServerRequest): Mono<ServerResponse> =
-        ServerResponse.ok().contentType(MediaType.APPLICATION_JSON_UTF8)
-            .body(BodyInserters.fromObject("{\"App name\": \"FizzBuzz Enterprise\"}"))
+    @PostMapping
+    fun doFizzBuzz(@RequestBody numbers: List<Int>): List<String> {
+        return fizzBuzzService.doFizzBuzz(numbers)
+    }
 }
