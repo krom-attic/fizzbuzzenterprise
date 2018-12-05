@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Flux
 import ru.grushetsky.fizzbuzzenterprise.domain.FizzBuzzService
 
 @CrossOrigin
@@ -11,7 +12,7 @@ import ru.grushetsky.fizzbuzzenterprise.domain.FizzBuzzService
 class FizzBuzzController(val fizzBuzzService: FizzBuzzService) {
 
     @PostMapping
-    fun doFizzBuzz(@RequestBody numbers: List<Int>): List<String> {
+    fun doFizzBuzz(@RequestBody numbers: List<Int>): Flux<StringValue> {
         return fizzBuzzService.doFizzBuzz(numbers)
     }
 }

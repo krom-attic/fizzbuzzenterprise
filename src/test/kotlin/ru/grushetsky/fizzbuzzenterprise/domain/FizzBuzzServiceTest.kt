@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import ru.grushetsky.fizzbuzzenterprise.api.StringValue
 
 internal class FizzBuzzServiceTest {
 
@@ -13,7 +14,7 @@ internal class FizzBuzzServiceTest {
         val fizzBuzzService = FizzBuzzService()
 
         // when
-        val fizzBuzzed = fizzBuzzService.doFizzBuzz(emptyList())
+        val fizzBuzzed = fizzBuzzService.doFizzBuzz(emptyList()).collectList().block()
 
         // then
         assertThat(fizzBuzzed).isEmpty()
@@ -36,9 +37,9 @@ internal class FizzBuzzServiceTest {
         val fizzBuzzService = FizzBuzzService()
 
         // when
-        val fizzBuzzed = fizzBuzzService.doFizzBuzz(listOf(input))
+        val fizzBuzzed = fizzBuzzService.doFizzBuzz(listOf(input)).collectList().block()
 
         // then
-        assertThat(fizzBuzzed).containsOnly(output)
+        assertThat(fizzBuzzed).containsOnly(StringValue(output))
     }
 }
